@@ -1,0 +1,58 @@
+#include <Servo.h>
+int data = 0;
+Servo myservo;
+int pos = 90;
+
+void setup(){
+  // Start up our serial port, we configured our XBEE devices for 38400 bps. 
+  Serial.begin(9200);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  myservo.attach(10);
+  myservo.write(pos);
+}
+
+void loop(){
+
+  unsigned char i, j ;// define variables
+
+  if (Serial.available() > 0){
+    data = Serial.read();
+    if(data==1){
+    digitalWrite(8, HIGH);
+    }
+    if(data==2){
+    digitalWrite(8, LOW);
+    }
+    if(data==3){
+        unsigned char i, j ;// define variables
+        for (i = 0; i <80; i++) // Wen a frequency sound
+          {
+            digitalWrite (9, HIGH) ;// send voice
+            delay (1) ;// Delay 1ms
+            digitalWrite (9, LOW) ;// do not send voice
+            delay (1) ;// delay ms
+          }
+          for (i = 0; i <100; i++) // Wen Qie out another frequency sound
+          {
+            digitalWrite (9, HIGH) ;// send voice
+            delay (2) ;// delay 2ms
+            digitalWrite (9, LOW) ;// do not send voice
+            delay (2) ;// delay 2ms
+          }
+        
+    }
+
+    if(data==5){
+      pos+=10;
+      myservo.write(pos);
+    }
+    if(data==6){
+      pos-=10;
+      myservo.write(pos);
+    }
+
+    
+  }
+
+}

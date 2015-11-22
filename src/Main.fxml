@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="194.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <Button fx:id="on" layoutX="126.0" layoutY="14.0" mnemonicParsing="false" text="Led on" />
+      <Button fx:id="off" layoutX="126.0" layoutY="39.0" mnemonicParsing="false" text="Led off" />
+      <ComboBox fx:id="combo" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="91.0" />
+      <Button fx:id="buzzer" layoutX="126.0" layoutY="95.0" mnemonicParsing="false" text="Buzzer" />
+      <Button fx:id="servoLeft" layoutX="24.0" layoutY="107.0" mnemonicParsing="false" text="Left" />
+      <Button fx:id="servoRight" layoutX="60.0" layoutY="107.0" mnemonicParsing="false" text="Right" />
+      <Label layoutX="45.0" layoutY="90.0" text="Servo" />
+      <Button fx:id="connect" layoutX="14.0" layoutY="46.0" mnemonicParsing="false" text="Connect" />
+   </children>
+</AnchorPane>
