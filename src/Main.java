@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,6 +6,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,7 +33,7 @@ public class Main extends Application {
     
     public ArrayList<String> portsList;
     public Enumeration ports = null;
-    public HashMap portMap = new HashMap();
+    public HashMap portMap;
     public CommPortIdentifier selectedPortIdentifier = null;
     public SerialPort serialPort = null;
     public InputStream input = null;
@@ -43,18 +43,32 @@ public class Main extends Application {
     public final int DASH_ASCII = 45;
     public final int NEW_LINE_ASCII = 10;
     
+    public Main(){
+        portMap = new HashMap();
+    }
+    
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Main main = new Main();
-        main.lookForPorts();
-        FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("Main.fxml"));
-        Controller controller = new Controller(this);
-        loader.setController(controller);
-        AnchorPane anchorPane = (AnchorPane) loader.load();
-        primaryStage.setTitle("Controlls");
-        Scene scene = new Scene(anchorPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        
+        Platform.runLater(new Runnable() {
+            public void run(){
+                Main main = new Main();
+                main.lookForPorts();
+                Controller controller = new Controller(main);
+                FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("Main.fxml"));
+                loader.setController(controller);
+                AnchorPane anchorPane = null;
+                    try {
+                        anchorPane = (AnchorPane) loader.load();
+                    } catch (IOException e) {
+                         e.printStackTrace();
+                    }
+                primaryStage.setTitle("Controlls");
+                Scene scene = new Scene(anchorPane);
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            }
+        });
         
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
             @Override
@@ -69,8 +83,8 @@ public class Main extends Application {
     }
     
     public  void lookForPorts(){
-        portsList = new ArrayList<String>();
       //PART 1: searching for available ports
+        portsList = new ArrayList<String>();
         ports = CommPortIdentifier.getPortIdentifiers();
                 while (ports.hasMoreElements()){
                     CommPortIdentifier curPort = (CommPortIdentifier) ports.nextElement();
@@ -126,6 +140,5 @@ public class Main extends Application {
             return false;
         }
     }
-    
-
+   
 }
