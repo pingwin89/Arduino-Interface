@@ -20,6 +20,12 @@ import java.util.TooManyListenersException;
 
 public class Controller {
     
+    public Main main;
+
+    public Controller(Main main){
+    this.main=main;
+    }
+    
     @FXML Button on;
     @FXML Button off;
     @FXML Button buzzer;
@@ -30,17 +36,17 @@ public class Controller {
     
     public void initialize(){
         
-        ObservableList olist = FXCollections.observableArrayList(Main.listaPortow);
+        ObservableList olist = FXCollections.observableArrayList(main.portsList);
         combo.setItems(olist);
         
         connect.setOnAction(event->{
-            if(Main.connect(combo.getSelectionModel().getSelectedItem())) connect.setDisable(true);
+            if(main.connect(combo.getSelectionModel().getSelectedItem())) connect.setDisable(true);
         });
         
         on.setOnAction(event->{
             try {
-                Main.output.write(1);
-                Main.output.flush();
+                main.output.write(1);
+                main.output.flush();
                 System.out.println("sent 1");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -50,8 +56,8 @@ public class Controller {
         
         off.setOnAction(event->{
             try {
-                Main.output.write(2);
-                Main.output.flush();
+                main.output.write(2);
+                main.output.flush();
                 System.out.println("sent 2");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -61,8 +67,8 @@ public class Controller {
         
         buzzer.setOnAction(event->{
             try {
-                Main.output.write(3);
-                Main.output.flush();
+                main.output.write(3);
+                main.output.flush();
                 System.out.println("sent 3");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -72,8 +78,8 @@ public class Controller {
         
         servoLeft.setOnAction(event->{
             try {
-                Main.output.write(5);
-                Main.output.flush();
+                main.output.write(5);
+                main.output.flush();
                 System.out.println("sent 5");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -83,8 +89,8 @@ public class Controller {
         
         servoRight.setOnAction(event->{
             try {
-                Main.output.write(6);
-                Main.output.flush();
+                main.output.write(6);
+                main.output.flush();
                 System.out.println("sent 6");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
